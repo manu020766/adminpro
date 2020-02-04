@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'progress', component: ProgressComponent },
       { path: 'graficas1', component: Graficas1Component },
-      { path: '', redirectTo: '/dasboard', pathMatch: 'full' },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
       { path: '**', component: NopagefoundComponent }
     ]
   }
