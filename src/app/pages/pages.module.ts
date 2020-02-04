@@ -7,6 +7,9 @@ import { SharedModule } from '../shared/shared.module'
 // Pages Routes
 import { PagesRoutingModule } from './pages-routing.module'
 
+// Librería para crear gráficos
+import { ChartsModule } from 'ng2-charts'
+
 //Main Pages
 import { PagesComponent } from './pages.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
@@ -18,6 +21,7 @@ import { IncrementadorComponent } from '../components/incrementador/incrementado
     imports: [
         SharedModule,
         FormsModule,
+        ChartsModule,
         PagesRoutingModule
     ],
     declarations: [
