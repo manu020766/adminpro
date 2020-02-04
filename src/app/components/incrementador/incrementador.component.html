@@ -6,7 +6,7 @@
           <i class="mdi mdi-minus"></i>
       </button>
     </span>
-    <input type="number" class="form-control" name="porcentaje" [(ngModel)]="porcentaje" (ngModelChange)="EmiteNuevoPorcentaje()">
+    <input #txtProgress type="number" class="form-control" name="porcentaje" [(ngModel)]="porcentaje" (ngModelChange)="EmiteNuevoPorcentaje()">
     <span class="input-group-append">
       <button (click)="varioEn(5)" class="btn btn-outline-primary"
                 style="border-radius: 0px !important;  padding: 8px 12px;" type="button" id="button-addon2">
