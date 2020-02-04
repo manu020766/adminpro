@@ -1,1 +1,33 @@
-<p>progress works!</p>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Barra de progreso</h4>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-animated progress-bar-striped" [style.width]="porcentaje + '%'"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <app-incrementador leyenda="Barra de aprendizaje" (porcentajeActual)="porcentaje = $event"></app-incrementador>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <app-incrementador leyenda="Barra de ignorancia" (porcentajeActual)="porcentaje = $event"></app-incrementador>
+            </div>
+        </div>
+    </div>
+</div>

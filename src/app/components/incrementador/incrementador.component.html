@@ -1,0 +1,16 @@
+<h4>{{ leyenda }}</h4>
+<div class="input-group">
+    <span class="input-group-prepend">
+      <button (click)="varioEn(-5)" class="btn btn-outline-primary"
+                style="border-radius: 0px !important;  padding: 8px 12px;" type="button" id="button-addon1">
+          <i class="mdi mdi-minus"></i>
+      </button>
+    </span>
+    <input type="number" class="form-control" name="porcentaje" [(ngModel)]="porcentaje" (ngModelChange)="EmiteNuevoPorcentaje()">
+    <span class="input-group-append">
+      <button (click)="varioEn(5)" class="btn btn-outline-primary"
+                style="border-radius: 0px !important;  padding: 8px 12px;" type="button" id="button-addon2">
+          <i class="mdi mdi-plus"></i>
+      </button>
+    </span>
+</div>
