@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core"
 import { FormsModule } from '@angular/forms'
+import { BrowserModule } from '@angular/platform-browser'
 
 // Shared components
 import { SharedModule } from '../shared/shared.module'
@@ -20,6 +21,7 @@ import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.co
 
 @NgModule({
     imports: [
+        BrowserModule,
         SharedModule,
         FormsModule,
         ChartsModule,

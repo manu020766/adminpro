@@ -43,14 +43,12 @@ graficos: any = {
     'type': 'doughnut',
     'leyenda': '¿Le importa que le den gases?'
   },
-};
+}
 
-
-constructor() { }
+graficos2: any[] = []
 
 ngOnInit() {
-
-  
+  for(let grafico in this.graficos) { this.graficos2.push(this.graficos[grafico]) }
 }
 
 // events
