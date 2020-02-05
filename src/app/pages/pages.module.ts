@@ -26,7 +26,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
         SharedModule,
         FormsModule,
         ChartsModule,
-        PagesRoutingModule
+        PagesRoutingModule,
     ],
     declarations: [
         PagesComponent,
