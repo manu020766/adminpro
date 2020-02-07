@@ -13,11 +13,11 @@ const routes:Routes = [
         path: '',
         component: PagesComponent,
         children: [
-            { path: 'dashboard', component: DashboardComponent },
-            { path: 'graficas1', component: Graficas1Component},
-            { path: 'progress', component: ProgressComponent },
+            { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+            { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
+            { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' } },
+            { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes de cuenta' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-            { path: 'account-settings', component: AccountSettingsComponent },
             { path: '**', component:NopagefoundComponent },
         ]
     }
