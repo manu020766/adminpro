@@ -24,36 +24,16 @@ export class RegisterComponent implements OnInit {
     this.forma = this.fb.group({
       nombre: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(this.CARACTERES_PASSWORD), this.sonDistintos('password2')]],
-      password2: ['', [Validators.required, Validators.minLength(this.CARACTERES_PASSWORD), this.sonDistintos2('password') ]],
+      password: ['', [Validators.required, Validators.minLength(this.CARACTERES_PASSWORD)]],
+      password2: ['', [Validators.required, Validators.minLength(this.CARACTERES_PASSWORD)]],
       condiciones: ['', Validators.requiredTrue]
-    })
+    }, { validators: this.passwordIguales })
   }
 
-  sonDistintos(campo:string): ValidatorFn {
-
-    return (control: AbstractControl): { [key: string]: any } => {
-
-      const controlActual = control.value
-
-      const sonDistintos = control.root.value[campo] !== controlActual;
-console.log('cosa ', controlActual ,control.root.value[campo])
-      return sonDistintos ? {'sondistintos': {sonDistintos}}: null;
-    }
-  }
-
-  sonDistintos2(campo:string): ValidatorFn {
-
-    return (control: AbstractControl): { [key: string]: any } => {
-
-      const controlActual = control.value
-
-      const sonDistintos = control.root.value[campo] !== controlActual;
-console.log('cosa2 ', controlActual ,control.root.value[campo])
-      return sonDistintos ? {'sondistintos2': {sonDistintos}}: null;
-    }
-  }
-
+  passwordIguales(group: FormGroup) {
+    return group.get('password').value === group.get('password2').value
+       ? null : {'passwordNoIguales': true};
+ }
 
   get nombreErrorRequerido() {
     return this.forma.get('nombre').hasError('required') && this.forma.get('nombre').touched
@@ -70,8 +50,8 @@ console.log('cosa2 ', controlActual ,control.root.value[campo])
   get passwordMinlength() {
     return this.forma.get('password').hasError('minlength') && this.forma.get('password').touched
   }
-  get passwordSonDistintos() {
-    return this.forma.get('password').touched && this.forma.get('password').hasError('sondistintos')
+  get passwordNoIguales() {
+    return this.forma.hasError('passwordNoIguales') && this.forma.get('password2').touched
   }
   get password2Requerido() {
     return this.forma.get('password2').hasError('required') && this.forma.get('password2').touched
@@ -79,8 +59,8 @@ console.log('cosa2 ', controlActual ,control.root.value[campo])
   get password2Minlength() {
     return this.forma.get('password2').hasError('minlength') && this.forma.get('password2').touched
   }
-  get password2SonDistintos() {
-    return this.forma.get('password2').touched && this.forma.get('password2').hasError('sondistintos2')
+  get password2NoIguales() {
+    return this.forma.hasError('passwordNoIguales') && this.forma.get('password2').touched
   }
   get condicionesRequerido() {
     return this.forma.get('condiciones').hasError('required') && this.forma.get('condiciones').touched
