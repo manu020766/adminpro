@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import Swal from 'sweetalert2'
 
 declare function init_plugins()
 
@@ -72,6 +73,8 @@ export class RegisterComponent implements OnInit {
         const control = this.forma.get(field)             // selecciono cada control
         control.markAsTouched()                           // marco cada control para obligar a disparar la validación/es
       })
+
+      if(!this.forma.value.condiciones) Swal.fire('Aviso','Es requerido aceptar los terminos','warning')
     }
   }
 }
