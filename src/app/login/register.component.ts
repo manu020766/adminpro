@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import Swal from 'sweetalert2'
+import { Usuario } from '../models/usuario.model'
+import { UsuarioService } from '../services/usuario/usuario.service'
 
 declare function init_plugins()
 
@@ -16,7 +18,8 @@ export class RegisterComponent implements OnInit {
   CARACTERES_PASSWORD = 3
   forma: FormGroup
   constructor(
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private usuarioService:UsuarioService
   ) { }
 
   ngOnInit() {
@@ -66,7 +69,12 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.forma.valid) {
-      console.log('registrar usuario')
+      const usuario = new Usuario(
+        this.forma.get('nombre').value,
+        this.forma.get('email').value,
+        this.forma.get('password').value
+      )
+      this.usuarioService.createUsuario(usuario).subscribe( res => console.log(res))
     } else {
       console.log('comprobando todos los campos')
       Object.keys(this.forma.controls).forEach(field => { // Recorro todos los controles del formulario
