@@ -24,21 +24,33 @@ export class RegisterComponent implements OnInit {
     this.forma = this.fb.group({
       nombre: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(this.CARACTERES_PASSWORD)]],
-      password2: ['', [Validators.required, Validators.minLength(this.CARACTERES_PASSWORD), this.sonDistintos('password') ]],
+      password: ['', [Validators.required, Validators.minLength(this.CARACTERES_PASSWORD), this.sonDistintos('password2')]],
+      password2: ['', [Validators.required, Validators.minLength(this.CARACTERES_PASSWORD), this.sonDistintos2('password') ]],
       condiciones: ['', Validators.requiredTrue]
     })
   }
 
-  sonDistintos(campo1:string): ValidatorFn {
+  sonDistintos(campo:string): ValidatorFn {
 
     return (control: AbstractControl): { [key: string]: any } => {
 
-      const password2 = control.value
+      const controlActual = control.value
 
-      const sonDistintos = control.root.value[campo1] !== password2;
-
+      const sonDistintos = control.root.value[campo] !== controlActual;
+console.log('cosa ', controlActual ,control.root.value[campo])
       return sonDistintos ? {'sondistintos': {sonDistintos}}: null;
+    }
+  }
+
+  sonDistintos2(campo:string): ValidatorFn {
+
+    return (control: AbstractControl): { [key: string]: any } => {
+
+      const controlActual = control.value
+
+      const sonDistintos = control.root.value[campo] !== controlActual;
+console.log('cosa2 ', controlActual ,control.root.value[campo])
+      return sonDistintos ? {'sondistintos2': {sonDistintos}}: null;
     }
   }
 
@@ -58,6 +70,9 @@ export class RegisterComponent implements OnInit {
   get passwordMinlength() {
     return this.forma.get('password').hasError('minlength') && this.forma.get('password').touched
   }
+  get passwordSonDistintos() {
+    return this.forma.get('password').touched && this.forma.get('password').hasError('sondistintos')
+  }
   get password2Requerido() {
     return this.forma.get('password2').hasError('required') && this.forma.get('password2').touched
   }
@@ -65,7 +80,7 @@ export class RegisterComponent implements OnInit {
     return this.forma.get('password2').hasError('minlength') && this.forma.get('password2').touched
   }
   get password2SonDistintos() {
-    return this.forma.get('password2').touched && this.forma.get('password2').hasError('sondistintos')
+    return this.forma.get('password2').touched && this.forma.get('password2').hasError('sondistintos2')
   }
   get condicionesRequerido() {
     return this.forma.get('condiciones').hasError('required') && this.forma.get('condiciones').touched
@@ -75,6 +90,7 @@ export class RegisterComponent implements OnInit {
     if (this.forma.valid) {
       console.log('registrar usuario')
     } else {
+      console.log('comprobando todos los campos')
       Object.keys(this.forma.controls).forEach(field => { // Recorro todos los controles del formulario
         const control = this.forma.get(field)             // selecciono cada control
         control.markAsTouched()                           // marco cada control para obligar a disparar la validación/es
