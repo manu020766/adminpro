@@ -50,9 +50,6 @@ export class RegisterComponent implements OnInit {
   get passwordMinlength() {
     return this.forma.get('password').hasError('minlength') && this.forma.get('password').touched
   }
-  get passwordNoIguales() {
-    return this.forma.hasError('passwordNoIguales') && this.forma.get('password2').touched
-  }
   get password2Requerido() {
     return this.forma.get('password2').hasError('required') && this.forma.get('password2').touched
   }
