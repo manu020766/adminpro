@@ -64,23 +64,21 @@ export class RegisterComponent implements OnInit {
   get password2Minlength() {
     return this.forma.get('password2').hasError('minlength') && this.forma.get('password2').touched
   }
-  // get password2SonDistintos() {
-  //   return this.forma.get('password2').hasError('sondistintos') && this.forma.get('password2').touched
-  // }
+  get password2SonDistintos() {
+    return this.forma.get('password2').touched && this.forma.get('password2').hasError('sondistintos')
+  }
   get condicionesRequerido() {
     return this.forma.get('condiciones').hasError('required') && this.forma.get('condiciones').touched
   }
 
-
-
   onSubmit() {
-    console.log('forma: ',this.forma.value,' - ', this.forma.valid)
-    console.log('nombre ', this.forma.get('nombre').errors)
-    console.log('email ', this.forma.get('email').errors)
-    console.log('password ', this.forma.get('password').errors)
-    console.log('password2 ', this.forma.get('password2').errors)
-    console.log('condiciones ', this.forma.get('condiciones').errors)
-    console.log('formulario erros ', this.forma.errors)
+    if (this.forma.valid) {
+      console.log('registrar usuario')
+    } else {
+      Object.keys(this.forma.controls).forEach(field => { // Recorro todos los controles del formulario
+        const control = this.forma.get(field)             // selecciono cada control
+        control.markAsTouched()                           // marco cada control para obligar a disparar la validación/es
+      })
+    }
   }
-
 }
