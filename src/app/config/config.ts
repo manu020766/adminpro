@@ -1,1 +1,1 @@
-export const HTTP_URL = 'http://localhost:3000/usuario'
+export const HTTP_URL = 'http://localhost:3000'
