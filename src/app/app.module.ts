@@ -4,9 +4,6 @@ import { AppRoutingModule } from './app-routing.module'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 
-//Librerias
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2' // esta librería es para mostrar diálogos, es chulisima
-
 import { AppComponent } from './app.component'
 import { PagesModule } from './pages/pages.module'
 
@@ -25,7 +22,6 @@ import { RegisterComponent } from './login/register.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SweetAlert2Module.forRoot(),
     ReactiveFormsModule,
     PagesModule
   ],

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import Swal from 'sweetalert2'
 import { Usuario } from '../models/usuario.model'
 import { UsuarioService } from '../services/usuario/usuario.service'
 import { Router } from '@angular/router'
@@ -85,7 +84,8 @@ export class RegisterComponent implements OnInit {
         control.markAsTouched()                           // marco cada control para obligar a disparar la validación/es
       })
 
-      if(!this.forma.value.condiciones) Swal.fire('Aviso','Es requerido aceptar los terminos','warning')
+      // if(!this.forma.value.condiciones) Swal.fire('Aviso','Es requerido aceptar los terminos','warning')
+      if(!this.forma.value.condiciones) alert("Aviso => Es requerido aceptar los terminos")
     }
   }
 }
