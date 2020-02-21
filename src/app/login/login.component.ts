@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { Usuario } from '../models/usuario.model'
 import { FormGroup } from '@angular/forms';
+import { UsuarioService } from '../services/usuario/usuario.service';
 
 declare function init_plugins()
 
@@ -16,11 +17,11 @@ export class LoginComponent implements OnInit {
 
   usuario:Usuario
   recuerdame:boolean
-  constructor(public router:Router) { }
+  constructor(public router:Router, private usuarioService: UsuarioService) { }
 
   ngOnInit() {
     init_plugins()
-    
+
     this.usuario = new Usuario('','','')
     this.recuerdame = false
   }
@@ -44,7 +45,21 @@ export class LoginComponent implements OnInit {
     if (usuarioForm.invalid) {
       usuarioForm.controls['email'].markAsTouched()
       usuarioForm.controls['password'].markAsTouched()
-    } else this.router.navigate(['dashboard'])
-  }
+    }
+    this.usuarioService.loginUsuario(this.usuario)
+      .subscribe(
+        res => {
+          console.log('RESPUESTA: ', res)
+          this.router.navigate(['dashboard'])
+        },
+        error => {
+          // console.log('res', error['error'].ok)
+          // console.log('res', error['error'].mensaje)
 
+          alert(`Acceso Denegado => ${ error['error'].mensaje }`)
+
+          usuarioForm.reset()
+        }
+      )   
+  }
 }
