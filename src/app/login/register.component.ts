@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import Swal from 'sweetalert2'
 import { Usuario } from '../models/usuario.model'
 import { UsuarioService } from '../services/usuario/usuario.service'
+import { Router } from '@angular/router'
 
 declare function init_plugins()
 
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit {
   forma: FormGroup
   constructor(
     private fb:FormBuilder,
-    private usuarioService:UsuarioService
+    private usuarioService:UsuarioService,
+    private router:Router
   ) { }
 
   ngOnInit() {
@@ -75,6 +77,7 @@ export class RegisterComponent implements OnInit {
         this.forma.get('password').value
       )
       this.usuarioService.createUsuario(usuario).subscribe( res => console.log(res))
+      this.router.navigate(['/login'])
     } else {
       console.log('comprobando todos los campos')
       Object.keys(this.forma.controls).forEach(field => { // Recorro todos los controles del formulario
