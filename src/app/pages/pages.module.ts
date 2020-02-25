@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core"
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 
 // Shared components
@@ -29,6 +29,7 @@ import { ProfileComponent } from './profile/profile.component'
         BrowserModule,
         SharedModule,
         FormsModule,
+        ReactiveFormsModule,
         ChartsModule,
         PagesRoutingModule,
         PipesModule
