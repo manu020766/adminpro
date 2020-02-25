@@ -49,10 +49,11 @@ export class LoginComponent implements OnInit {
       // console.log('token: ', token)
 
       this.usuarioService.loginGoogle(token).subscribe( resp => {
-        console.log(resp)
+        this.router.navigate(['dashboard'])
       })
     })
   }
+
 
   // ingresar() {                                       // De esta forma funcionaria con la referencia al viewChild
   //   console.log('Formulario: ', this.form.valid)
