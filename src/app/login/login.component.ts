@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router'
 import { Usuario } from '../models/usuario.model'
 import { FormGroup } from '@angular/forms';
@@ -21,7 +21,11 @@ export class LoginComponent implements OnInit {
 
   auth2: any  // google signIn
 
-  constructor(public router:Router, private usuarioService: UsuarioService) { }
+  constructor(
+    public router:Router,
+    public usuarioService: UsuarioService,
+    public ngZone: NgZone
+    ) { }
 
   ngOnInit() {
     init_plugins()
@@ -48,9 +52,9 @@ export class LoginComponent implements OnInit {
       let token = googleUser.getAuthResponse().id_token
       // console.log('token: ', token)
 
-      this.usuarioService.loginGoogle(token).subscribe( resp => {
-        this.router.navigate(['dashboard'])
-      })
+      this.usuarioService.loginGoogle(token)
+        .subscribe(() => this.ngZone.run(() => this.router.navigate(['dashboard']))   
+      )
     })
   }
 
