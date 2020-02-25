@@ -14,6 +14,11 @@ export class UsuarioService {
 
   constructor(private http:HttpClient) { }
 
+
+  estaLogeado():boolean {
+    return !!localStorage.getItem('token')
+  }
+
   guardarStorage(id: string, token: string, usuario: Usuario) {
       localStorage.setItem('id', id)
       localStorage.setItem('token', token)

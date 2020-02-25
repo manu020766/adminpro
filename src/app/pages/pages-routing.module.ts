@@ -7,11 +7,13 @@ import { Graficas1Component } from './graficas1/graficas1.component'
 import { ProgressComponent } from './progress/progress.component'
 import { NopagefoundComponent } from '../shared/nopagefound/nopagefound.component'
 import { AccountSettingsComponent } from './account-settings/account-settings.component'
+import { LoginGuardGuard } from '../services/guards/login-guard.guard'
 
 const routes:Routes = [
     {
         path: '',
         component: PagesComponent,
+        canActivate: [LoginGuardGuard],
         children: [
             { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
             { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
