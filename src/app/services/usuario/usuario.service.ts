@@ -14,6 +14,18 @@ export class UsuarioService {
 
   constructor(private http:HttpClient) { }
 
+  getUsuarioNombre():string {
+    console.log(JSON.parse(localStorage.getItem('usuario')).nombre)
+    return JSON.parse(localStorage.getItem('usuario')).nombre
+  }
+
+  getImagenGoogle():string {
+    const imagen = JSON.parse(localStorage.getItem('usuario')).img
+
+    if (imagen !== undefined) return imagen
+      else return ""
+  }
+
   estaLogeado():boolean {
     return !!localStorage.getItem('token')
   }

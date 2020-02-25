@@ -5,6 +5,9 @@ import { BrowserModule } from '@angular/platform-browser'
 // Shared components
 import { SharedModule } from '../shared/shared.module'
 
+// Pipes 
+import { PipesModule } from '../pipes/pipes.module'
+
 // Pages Routes
 import { PagesRoutingModule } from './pages-routing.module'
 
@@ -27,6 +30,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
         FormsModule,
         ChartsModule,
         PagesRoutingModule,
+        PipesModule
     ],
     declarations: [
         PagesComponent,

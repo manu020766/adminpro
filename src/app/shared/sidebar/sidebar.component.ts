@@ -10,6 +10,8 @@ import { Router } from '@angular/router'
 })
 export class SidebarComponent implements OnInit {
 
+  imagen:string
+  usuarioNombre:string
   constructor(
                 private sidebar: SidebarService,
                 private usuarioService: UsuarioService,
@@ -17,6 +19,13 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.imagen = '../assets/images/users/thalia.jpg'
+
+    const imagenGoogle = this.usuarioService.getImagenGoogle()
+    if (imagenGoogle) this.imagen = '../assets/images/users/manu.png'
+
+    this.usuarioNombre = this.usuarioService.getUsuarioNombre()
   }
 
   logout() {
