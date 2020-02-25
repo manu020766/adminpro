@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { HTTP_URL } from '../../config/config'
 import { Usuario } from '../../models/usuario.model'
-import { tap, map } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,18 @@ export class UsuarioService {
 
   constructor(private http:HttpClient) { }
 
-
   estaLogeado():boolean {
     return !!localStorage.getItem('token')
   }
 
+  logout() {
+    localStorage.removeItem('id')
+    localStorage.removeItem('token')
+    localStorage.removeItem('usuario')
+
+    this.usuario = undefined
+    this.token = undefined
+  }
   guardarStorage(id: string, token: string, usuario: Usuario) {
       localStorage.setItem('id', id)
       localStorage.setItem('token', token)
