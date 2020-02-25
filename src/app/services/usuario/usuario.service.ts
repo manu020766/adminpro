@@ -10,6 +10,12 @@ export class UsuarioService {
 
   constructor(private http:HttpClient) { }
 
+  loginGoogle(token: string) {
+    let url = HTTP_URL + '/login/google'
+
+    return this.http.post(url, { token })
+  }
+
   createUsuario(usuario:Usuario) {
     return this.http.post(HTTP_URL + '/usuario', usuario)
   }

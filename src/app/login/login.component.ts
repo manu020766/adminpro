@@ -43,10 +43,14 @@ export class LoginComponent implements OnInit {
   }
   attachSignin(element) {
     this.auth2.attachClickHandler(element, {}, googleUser => {
-      let profile = googleUser.getBasicProfile()
-      console.log(profile)
+      // let profile = googleUser.getBasicProfile()
+      // console.log(profile)
       let token = googleUser.getAuthResponse().id_token
-      console.log('token: ', token)
+      // console.log('token: ', token)
+
+      this.usuarioService.loginGoogle(token).subscribe( resp => {
+        console.log(resp)
+      })
     })
   }
 
