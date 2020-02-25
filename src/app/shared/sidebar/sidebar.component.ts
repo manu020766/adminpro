@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { SidebarService } from 'src/app/services/shared/sidebar.service'
 import { UsuarioService } from 'src/app/services/usuario/usuario.service'
 import { Router } from '@angular/router'
+import { Usuario } from 'src/app/models/usuario.model'
 
 @Component({
   selector: 'app-sidebar',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router'
 export class SidebarComponent implements OnInit {
 
   imagen:string
-  usuarioNombre:string
+  usuario:Usuario
   constructor(
                 private sidebar: SidebarService,
                 private usuarioService: UsuarioService,
@@ -19,13 +20,11 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.usuario = this.usuarioService.getUsuario()
 
     this.imagen = '../assets/images/users/thalia.jpg'
 
-    const imagenGoogle = this.usuarioService.getImagenGoogle()
-    if (imagenGoogle) this.imagen = '../assets/images/users/manu.png'
-
-    this.usuarioNombre = this.usuarioService.getUsuarioNombre()
+    if (this.usuario.google) this.imagen = '../assets/images/users/manu.png'
   }
 
   logout() {

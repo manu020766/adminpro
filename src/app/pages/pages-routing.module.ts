@@ -8,6 +8,7 @@ import { ProgressComponent } from './progress/progress.component'
 import { NopagefoundComponent } from '../shared/nopagefound/nopagefound.component'
 import { AccountSettingsComponent } from './account-settings/account-settings.component'
 import { LoginGuardGuard } from '../services/guards/login-guard.guard'
+import { ProfileComponent } from './profile/profile.component'
 
 const routes:Routes = [
     {
@@ -19,6 +20,7 @@ const routes:Routes = [
             { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
             { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' } },
             { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes de cuenta' } },
+            { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil de usuario'} },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
             { path: '**', component:NopagefoundComponent },
         ]
