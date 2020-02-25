@@ -4,7 +4,8 @@ import { Usuario } from '../models/usuario.model'
 import { FormGroup } from '@angular/forms';
 import { UsuarioService } from '../services/usuario/usuario.service';
 
-declare function init_plugins()
+declare function init_plugins()   //hace referencia a las utilidades que incorporamos en el index.html
+declare const gapi: any           //google signIn - hace referencia a google platform que incorporamos en el index.html
 
 @Component({
   selector: 'app-login',
@@ -17,13 +18,34 @@ export class LoginComponent implements OnInit {
 
   usuario:Usuario
   recuerdame:boolean
+
+  auth2: any  // google signIn
+
   constructor(public router:Router, private usuarioService: UsuarioService) { }
 
   ngOnInit() {
     init_plugins()
+    this.googleInit()
 
     this.usuario = new Usuario('','','')
     this.recuerdame = false
+  }
+
+  googleInit() {
+    gapi.load('auth2', () => {
+      this.auth2 = gapi.auth2.init({
+        client_id: '487557979160-kcoi5lrsrh3ur5g86j2oilf0v0sebfag.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email'
+      })
+      this.attachSignin(document.getElementById('btnGoogle'))
+    })
+  }
+  attachSignin(element) {
+    this.auth2.attachClickHandler(element, {}, googleUser => {
+      let profile = googleUser.getBasicProfile()
+      console.log(profile)
+    })
   }
 
   // ingresar() {                                       // De esta forma funcionaria con la referencia al viewChild
