@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(private usuarioService: UsuarioService, private router:Router) { }
 
   ngOnInit() {
-    this.usuario = this.usuarioService.getUsuario()
+    this.usuario = this.usuarioService.usuario
 
     this.imagen = '../assets/images/users/thalia.jpg'
 

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { HTTP_URL } from '../../config/config'
+import { URL_SERVICIOS } from '../../config/config'
 import { Usuario } from '../../models/usuario.model'
 import { map, tap, catchError } from 'rxjs/operators'
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
@@ -12,82 +13,155 @@ export class UsuarioService {
   usuario: Usuario
   token: string
 
-  constructor(private http:HttpClient) { }
-
-  getUsuario(): Usuario {
-    return JSON.parse(localStorage.getItem('usuario'))
+  constructor(public http:HttpClient, public router: Router) {
+    this.cargarStorage()
   }
 
-  estaLogeado():boolean {
-    return !!localStorage.getItem('token')
+  estaLogueado() {
+    return ( this.token.length > 5 ) ? true : false
+  }
+
+  cargarStorage() {
+
+    if ( localStorage.getItem('token')) {
+      this.token = localStorage.getItem('token');
+      this.usuario = JSON.parse( localStorage.getItem('usuario') );
+    } else {
+      this.token = '';
+      this.usuario = null;
+    }
+  }
+
+  guardarStorage( id: string, token: string, usuario: Usuario ) {
+
+    localStorage.setItem('id', id );
+    localStorage.setItem('token', token );
+    localStorage.setItem('usuario', JSON.stringify(usuario) );
+
+    this.usuario = usuario;
+    this.token = token;
   }
 
   logout() {
-    localStorage.removeItem('id')
-    localStorage.removeItem('token')
-    localStorage.removeItem('usuario')
+    this.usuario = null;
+    this.token = '';
 
-    this.usuario = undefined
-    this.token = undefined
-  }
-  guardarStorage(id: string, token: string, usuario: Usuario) {
-      localStorage.setItem('id', id)
-      localStorage.setItem('token', token)
-      localStorage.setItem('usuario', JSON.stringify(usuario))
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
 
-      this.usuario = usuario
-      this.token = token
+    this.router.navigate(['/login']);
   }
 
-  loginGoogle(token: string) {
-    let url = HTTP_URL + '/login/google'
+  loginGoogle( token: string ) {
 
-    return this.http.post(url, { token }).pipe(
-      map((resp:any) => {
-        this.guardarStorage(resp.id, resp.token, resp.usuarioDB)
-        return true
+    let url = URL_SERVICIOS + '/login/google';
+
+    return this.http.post( url, { token } ).pipe(
+      map( (resp: any) => {
+        this.guardarStorage( resp.id, resp.token, resp.usuario );
+        return true;
       })
     )
   }
 
-  createUsuario(usuario:Usuario) {
-    return this.http.post(HTTP_URL + '/usuario', usuario)
-  }
+  login( usuario: Usuario, recordar: boolean = false ) {
 
-  actualizarUsuario(usuario: Usuario) {
-    let url = HTTP_URL + '/usuario/' + usuario._id + '?token=' + localStorage.getItem('token')
+    if ( recordar ) {
+      localStorage.setItem('email', usuario.email );
+    }else {
+      localStorage.removeItem('email');
+    }
 
-    return this.http.put(url, usuario).pipe(
-      tap( (res:any) => localStorage.setItem('usuario', JSON.stringify(res.usuario)))
-    )
-  }
+    let url = URL_SERVICIOS + '/login';
+    return this.http.post( url, usuario ).pipe(
+      map( (resp: any) => {
+        this.guardarStorage( resp.id, resp.token, resp.usuarioDB );
 
-  loginUsuario(usuario:Usuario) {
-    return this.http.post(HTTP_URL + '/login', usuario).pipe(
-      map((resp:any) => {
-        this.guardarStorage(resp.id, resp.token, resp.usuarioDB)
-        return true
+        return true;
       })
     )
   }
 
-  cargarUsuarios(desde:number = 0) {
-    let url = HTTP_URL + '/usuario?desde=' + desde + '&mostrar=5'
+  crearUsuario( usuario: Usuario ) {
 
-    return this.http.get(url)
-  }
+    let url = URL_SERVICIOS + '/usuario';
 
-  buscarUsuarios(termino:string) {
-    let url = HTTP_URL + '/busqueda/todo/usuario/' + termino
+    return this.http.post( url, usuario ).pipe(
+      map( (resp: any) => {
 
-    return this.http.get(url).pipe(
-      map((response: any) => response.usuario)
+        alert(`Usuario creado: ${usuario.email}`);
+        return resp.usuario;
+      })
     )
   }
 
-  borrarUsuario(usuarioId:string) {
-    let url = HTTP_URL + '/usuario/' + usuarioId + '?token=' + localStorage.getItem('token')
+  actualizarUsuario( usuario: Usuario ) {
 
-    return this.http.delete(url)
+    let url = URL_SERVICIOS + '/usuario/' + usuario._id;
+    url += '?token=' + this.token;
+
+    return this.http.put( url, usuario ).pipe(
+      map( (resp: any) => {
+
+        if ( usuario._id === this.usuario._id ) {
+          let usuarioDB: Usuario = resp.usuario;
+          this.guardarStorage( usuarioDB._id, this.token, usuarioDB );
+        }
+
+        alert(`Usuario actualizado ${usuario.nombre}`);
+
+        return true;
+      })
+    )
+  }
+
+  // cambiarImagen( archivo: File, id: string ) {
+
+  //   this._subirArchivoService.subirArchivo( archivo, 'usuarios', id )
+  //         .then( (resp: any) => {
+
+  //           this.usuario.img = resp.usuario.img;
+  //           swal( 'Imagen Actualizada', this.usuario.nombre, 'success' );
+  //           this.guardarStorage( id, this.token, this.usuario );
+
+  //         })
+  //         .catch( resp => {
+  //           console.log( resp );
+  //         }) ;
+
+  // }
+
+
+  cargarUsuarios( desde: number = 0 ) {
+
+    let url = URL_SERVICIOS + '/usuario?desde=' + desde;
+    return this.http.get( url );
+
+  }
+
+  buscarUsuarios( termino: string ) {
+
+    let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + termino;
+    return this.http.get( url ).pipe(
+      map( (resp: any) => resp.usuarios )
+    )
+  }
+
+  borrarUsuario( id: string ) {
+
+    let url = URL_SERVICIOS + '/usuario/' + id;
+    url += '?token=' + this.token;
+
+    return this.http.delete( url ).pipe(
+      map( resp => {
+        alert('El usuario a sido eliminado correctamente')
+
+        return true;
+      })
+    )
+  }
+
+  getUsuario(): Usuario {
+    return JSON.parse(localStorage.getItem('usuario'))
   }
 }

@@ -79,16 +79,16 @@ export class LoginComponent implements OnInit {
       usuarioForm.controls['email'].markAsTouched()
       usuarioForm.controls['password'].markAsTouched()
     }
-    this.usuarioService.loginUsuario(this.usuario)
+
+    let usuario = new Usuario(null, usuarioForm.controls['email'].value, usuarioForm.controls['password'].value)  
+
+    this.usuarioService.login(usuario, false)
       .subscribe(
         res => {
           console.log('RESPUESTA: ', res)
           this.router.navigate(['dashboard'])
         },
         error => {
-          // console.log('res', error['error'].ok)
-          // console.log('res', error['error'].mensaje)
-
           alert(`Acceso Denegado => ${ error['error'].mensaje }`)
 
           usuarioForm.reset()

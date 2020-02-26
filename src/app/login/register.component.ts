@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
         this.forma.get('email').value,
         this.forma.get('password').value
       )
-      this.usuarioService.createUsuario(usuario).subscribe( res => console.log(res))
+      this.usuarioService.crearUsuario(usuario).subscribe( res => console.log(res))
       this.router.navigate(['/login'])
     } else {
       console.log('comprobando todos los campos')

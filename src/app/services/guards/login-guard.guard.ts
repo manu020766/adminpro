@@ -15,7 +15,7 @@ export class LoginGuardGuard implements CanActivate {
   
   canActivate(): boolean {
     
-    const estaLogeado = this.usuarioService.estaLogeado()
+    const estaLogeado = this.usuarioService.estaLogueado()
 
     if (!estaLogeado) this.router.navigateByUrl('/login') 
 
