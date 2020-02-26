@@ -2,13 +2,13 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input #input type="text" class="form-control" placeholder="Buscar usuario">
+                <input #input (keyup)="buscarUsuario(input.value)" type="text" class="form-control" placeholder="Buscar usuario">
             </div>
         </div>
     </div>
 </div>
 
-<div class="row" *ngIf="usuarios.length === 0">
+<div class="row" *ngIf="cargando">
     <div class="col-md-12">
         <div class="alert alert-warning text-center">
             <strong>Cargando...</strong>
@@ -20,11 +20,12 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="!cargando">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Usuarios registrados: <small style="color:orangered">{{ totalRegistros }} / {{ desde }} - {{ desde + 5 }}</small></h3>
+                <h3 *ngIf="mostrarPaginacion" class="card-title">Usuarios registrados: <small style="color:orangered">{{ totalRegistros }} / {{ desde }} - {{ desde + 5 }}</small></h3>
+                <h3 *ngIf="!mostrarPaginacion"class="card-title">Usuarios encontrados: <small style="color:orangered">{{ totalRegistros }}</small></h3>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -57,13 +58,14 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <button (click)="cambiarDesde(-5)" class="btn btn-secondarty mr-3">
-                    Anteriores
-                </button>
-                <button (click)="cambiarDesde(5)" class="btn secondary">
-                    Siguientes
-                </button>
+                <div *ngIf="mostrarPaginacion">
+                    <button (click)="cambiarDesde(-5)" class="btn btn-secondarty mr-3">
+                        Anteriores
+                    </button>
+                    <button (click)="cambiarDesde(5)" class="btn secondary">
+                        Siguientes
+                    </button>
+                </div>
             </div>
         </div>
     </div>

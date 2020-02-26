@@ -76,4 +76,12 @@ export class UsuarioService {
 
     return this.http.get(url)
   }
+
+  buscarUsuarios(termino:string) {
+    let url = HTTP_URL + '/busqueda/todo/usuario/' + termino
+
+    return this.http.get(url).pipe(
+      map((response: any) => response.usuario)
+    )
+  }
 }
