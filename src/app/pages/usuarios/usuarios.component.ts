@@ -20,9 +20,19 @@ export class UsuariosComponent implements OnInit {
   }
 
   cargarUsuarios() {
-    this.us.cargarUsuarios().subscribe((resp:any) => {
+    this.us.cargarUsuarios(this.desde).subscribe((resp:any) => {
       this.totalRegistros = resp.total
       this.usuarios = resp.usuarios
     })
+  }
+
+  cambiarDesde(valor:number) {
+    let desde = this.desde + valor
+
+    if (desde >= this.totalRegistros) return
+    if (desde < 0) return
+
+    this.desde += valor
+    this.cargarUsuarios()
   }
 }
