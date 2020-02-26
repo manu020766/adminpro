@@ -24,7 +24,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Usuarios registrados ( <small>{{ totalRegistros }}</small> )</h3>
+                <h3 class="card-title">Usuarios registrados: <small style="color:orangered">{{ totalRegistros }} / {{ desde }} - {{ desde + 5 }}</small></h3>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -58,10 +58,10 @@
                     </tbody>
                 </table>
 
-                <button (click)="cambiarDesde(-3)" class="btn btn-secondarty mr-3">
+                <button (click)="cambiarDesde(-5)" class="btn btn-secondarty mr-3">
                     Anteriores
                 </button>
-                <button (click)="cambiarDesde(3)" class="btn secondary">
+                <button (click)="cambiarDesde(5)" class="btn secondary">
                     Siguientes
                 </button>
             </div>

@@ -72,7 +72,7 @@ export class UsuarioService {
   }
 
   cargarUsuarios(desde:number = 0) {
-    let url = HTTP_URL + '/usuario?desde=' + desde + '&mostrar=3'
+    let url = HTTP_URL + '/usuario?desde=' + desde + '&mostrar=5'
 
     return this.http.get(url)
   }
