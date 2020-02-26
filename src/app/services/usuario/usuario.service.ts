@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { HTTP_URL } from '../../config/config'
 import { Usuario } from '../../models/usuario.model'
-import { map } from 'rxjs/operators'
+import { map, tap, catchError } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +53,15 @@ export class UsuarioService {
   createUsuario(usuario:Usuario) {
     return this.http.post(HTTP_URL + '/usuario', usuario)
   }
+
+  actualizarUsuario(usuario: Usuario) {
+    let url = HTTP_URL + '/usuario/' + usuario._id + '?token=' + localStorage.getItem('token')
+
+    return this.http.put(url, usuario).pipe(
+      tap( (res:any) => localStorage.setItem('usuario', JSON.stringify(res.usuario)))
+    )
+  }
+
 
   loginUsuario(usuario:Usuario) {
     return this.http.post(HTTP_URL + '/login', usuario).pipe(

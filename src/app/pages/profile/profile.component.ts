@@ -20,7 +20,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.usuario = this.usuarioService.getUsuario()
     
-    
     this.formulario = this.fb.group({
       nombre: [this.usuario.nombre,[Validators.required]],
       email: [{ value: this.usuario.email, disabled: this.usuario.google },[Validators.required, Validators.email]],
@@ -28,7 +27,10 @@ export class ProfileComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.formulario.value)
+    this.usuario.nombre = this.formulario.get('nombre').value
+    this.usuario.email = this.formulario.get('email').value
+
+    this.usuarioService.actualizarUsuario(this.usuario).subscribe(res => alert('Actualización realizada'))
   }
 
 }
