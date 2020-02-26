@@ -22,7 +22,8 @@ import { Graficas1Component } from './graficas1/graficas1.component'
 import { IncrementadorComponent } from '../components/incrementador/incrementador.component';
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
-import { ProfileComponent } from './profile/profile.component'
+import { ProfileComponent } from './profile/profile.component';
+import { UsuariosComponent } from './usuarios/usuarios.component'
 
 @NgModule({
     imports: [
@@ -42,13 +43,15 @@ import { ProfileComponent } from './profile/profile.component'
         IncrementadorComponent,
         GraficoDonaComponent,
         AccountSettingsComponent,
-        ProfileComponent
+        ProfileComponent,
+        UsuariosComponent
     ],
     exports: [
         PagesComponent,
         DashboardComponent,
         ProgressComponent,
-        Graficas1Component
+        Graficas1Component,
+        UsuariosComponent
     ]
 })
 

@@ -62,7 +62,6 @@ export class UsuarioService {
     )
   }
 
-
   loginUsuario(usuario:Usuario) {
     return this.http.post(HTTP_URL + '/login', usuario).pipe(
       map((resp:any) => {
@@ -70,5 +69,11 @@ export class UsuarioService {
         return true
       })
     )
+  }
+
+  cargarUsuarios(desde:number = 0) {
+    let url = HTTP_URL + '/usuario?desde=' + desde + '&mostrar=3'
+
+    return this.http.get(url)
   }
 }

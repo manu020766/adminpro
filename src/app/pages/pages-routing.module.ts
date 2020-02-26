@@ -9,6 +9,7 @@ import { NopagefoundComponent } from '../shared/nopagefound/nopagefound.componen
 import { AccountSettingsComponent } from './account-settings/account-settings.component'
 import { LoginGuardGuard } from '../services/guards/login-guard.guard'
 import { ProfileComponent } from './profile/profile.component'
+import { UsuariosComponent } from './usuarios/usuarios.component'
 
 const routes:Routes = [
     {
@@ -21,6 +22,7 @@ const routes:Routes = [
             { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' } },
             { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes de cuenta' } },
             { path: 'perfil', component: ProfileComponent, data: { titulo: 'Perfil de usuario'} },
+            { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios'} },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
             { path: '**', component:NopagefoundComponent },
         ]
