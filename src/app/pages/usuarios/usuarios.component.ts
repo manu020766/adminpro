@@ -29,6 +29,7 @@ export class UsuariosComponent implements OnInit {
       this.usuarios = resp.usuarios
       this.cargando = false
       this.mostrarPaginacion = true
+      console.log('usuarios', this.usuarios)
     })
   }
 
@@ -52,6 +53,18 @@ export class UsuariosComponent implements OnInit {
     this.us.buscarUsuarios(value).subscribe(resp => {
       this.usuarios = resp
       this.totalRegistros = resp.length
+    })
+  }
+
+  borrarUsuario(usuario:Usuario) {
+    if (usuario._id === localStorage.getItem('id')) {
+      alert('No puede borrarse a si mismo')
+      return
+    }
+
+    this.us.borrarUsuario(usuario._id).subscribe(resp => {
+      console.log(resp)
+      this.cargarUsuarios()
     })
   }
 }

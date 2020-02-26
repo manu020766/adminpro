@@ -84,4 +84,10 @@ export class UsuarioService {
       map((response: any) => response.usuario)
     )
   }
+
+  borrarUsuario(usuarioId:string) {
+    let url = HTTP_URL + '/usuario/' + usuarioId + '?token=' + localStorage.getItem('token')
+
+    return this.http.delete(url)
+  }
 }
