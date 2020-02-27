@@ -16,7 +16,7 @@ export class UsuariosComponent implements OnInit {
 
   mostrarPaginacion: boolean = false
 
-  constructor(public us: UsuarioService) { }
+  constructor(public usuarioService: UsuarioService) { }
 
   ngOnInit() {
     this.cargarUsuarios()
@@ -24,7 +24,7 @@ export class UsuariosComponent implements OnInit {
 
   cargarUsuarios() {
     this.cargando = true
-    this.us.cargarUsuarios(this.desde).subscribe((resp:any) => {
+    this.usuarioService.cargarUsuarios(this.desde).subscribe((resp:any) => {
       this.totalRegistros = resp.total
       this.usuarios = resp.usuarios
       this.cargando = false
@@ -50,7 +50,7 @@ export class UsuariosComponent implements OnInit {
       return
     }
     this.mostrarPaginacion = false
-    this.us.buscarUsuarios(value).subscribe(resp => {
+    this.usuarioService.buscarUsuarios(value).subscribe(resp => {
       this.usuarios = resp
       this.totalRegistros = resp.length
     })
@@ -62,12 +62,12 @@ export class UsuariosComponent implements OnInit {
       return
     }
 
-    this.us.borrarUsuario(usuario._id).subscribe(resp => {
+    this.usuarioService.borrarUsuario(usuario._id).subscribe(resp => {
       this.cargarUsuarios()
     })
   }
 
   guardarUsuario(usuario:Usuario) {
-    
+    this.usuarioService.actualizarUsuario(usuario).subscribe(console.log)
   }
 }
