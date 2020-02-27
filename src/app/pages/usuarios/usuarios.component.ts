@@ -44,11 +44,11 @@ export class UsuariosComponent implements OnInit {
   }
 
   buscarUsuario(value: string) {
+
     if (value.length <= 0) {
       this.cargarUsuarios()
       return
     }
-
     this.mostrarPaginacion = false
     this.us.buscarUsuarios(value).subscribe(resp => {
       this.usuarios = resp
@@ -63,7 +63,6 @@ export class UsuariosComponent implements OnInit {
     }
 
     this.us.borrarUsuario(usuario._id).subscribe(resp => {
-      console.log(resp)
       this.cargarUsuarios()
     })
   }
